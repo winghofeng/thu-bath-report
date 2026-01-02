@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>洗刷刷自由报告生成器</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-text">
+        <p class="kicker">校园卡洗浴分析</p>
+        <h1>洗刷刷自由报告</h1>
+        <p class="subtitle">上传交易记录，一键生成三张分布图 + Markdown 年度报告。</p>
+      </div>
+      <div class="hero-card">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div>
+            <h3>上传 Excel</h3>
+            <p>自动识别时间、金额、商户列。</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div>
+            <h3>合并洗澡记录</h3>
+            <p>10 分钟内合并，小额自动吸附。</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div>
+            <h3>快速生成报告</h3>
+            <p>热力图 + 时段分布 + 开支分布。</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="upload">
+      <form id="uploadForm" class="upload-form">
+        <label class="file-drop" for="fileInput">
+          <input id="fileInput" name="file" type="file" accept=".xlsx,.xls" />
+          <span class="file-title">拖拽或点击上传 Excel</span>
+          <span class="file-subtitle">支持校园卡交易记录的原始导出格式</span>
+        </label>
+        <div id="merchantPicker" class="merchant-picker hidden">
+          <div class="merchant-header">
+            <h3>选择宿舍/公寓</h3>
+            <p>默认已选包含“公寓/宿舍”的名称。</p>
+          </div>
+          <div id="merchantList" class="merchant-list"></div>
+        </div>
+        <button class="primary" type="submit">生成报告</button>
+      </form>
+      <p class="upload-hint">提示：报告会自动过滤 0:00-6:00 无热水时段，并合并 10 分钟内多笔交易。</p>
+    </section>
+
+    <section id="status" class="status"></section>
+
+    <section id="results" class="results hidden">
+      <div class="report">
+        <div class="report-header">
+          <div>
+            <h2>年度报告（Markdown）</h2>
+            <p id="timeRange" class="report-meta"></p>
+          </div>
+          <button id="copyBtn" class="ghost" type="button">复制 Markdown</button>
+        </div>
+        <div id="report" class="report-body"></div>
+      </div>
+
+      <div class="charts">
+        <h2>分布图</h2>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div id="periodChart" class="chart-canvas"></div>
+          </div>
+          <div class="chart-card">
+            <div id="amountChart" class="chart-canvas"></div>
+          </div>
+          <div class="chart-card">
+            <div id="heatmapChart" class="chart-canvas"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>可拓展设计：前端可接入更多可视化主题或替换 JS 图表库。</span>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

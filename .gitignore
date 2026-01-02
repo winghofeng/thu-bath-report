@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# User data & runtime output
+uploads/
+outputs/
+*.xlsx
+~$*.xlsx
+
+# Logs
+*.log
+
+.vscode/
