@@ -146,8 +146,13 @@ def merge_sessions(df: pd.DataFrame, max_gap_minutes: int = 10) -> pd.DataFrame:
         cleaned_rows.append(row.to_dict())
         i += 1
 
+    if not cleaned_rows:
+        return pd.DataFrame(
+            columns=["start_time", "end_time", "amount", "merchant", "time", "duration_min"]
+        )
+
     cleaned = pd.DataFrame(cleaned_rows)
-    if not cleaned.empty and "merchant" in df.columns:
+    if "merchant" in df.columns:
         cleaned["merchant"] = df["merchant"].iloc[0]
     cleaned["time"] = cleaned["start_time"]
     cleaned["duration_min"] = (
@@ -196,10 +201,12 @@ def analyze_bath_report(input_path: Path, output_dir: Path, merchant_filters: Op
     for _, group in df.groupby("merchant"):
         merged_frames.append(merge_sessions(group, max_gap_minutes=10))
     df = pd.concat(merged_frames, ignore_index=True)
+    if df.empty:
+        raise ValueError("似乎没有洗澡记录，请检查选择的宿舍是否仅为打水记录。")
 
     df = df[df["time"].dt.hour >= 6]
     if df.empty:
-        raise ValueError("过滤 0:00-6:00 时段后无有效洗浴记录")
+        raise ValueError("似乎没有洗澡记录，请检查选择的宿舍是否仅为打水记录。")
 
     df = add_features(df)
 

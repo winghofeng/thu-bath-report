@@ -43,7 +43,7 @@
       <form id="uploadForm" class="upload-form">
         <label class="file-drop" for="fileInput">
           <input id="fileInput" name="file" type="file" accept=".xlsx,.xls" />
-          <span class="file-title">拖拽或点击上传 Excel</span>
+          <span class="file-title" id="fileTitle">拖拽或点击上传 Excel</span>
           <span class="file-subtitle">支持校园卡交易记录的原始导出格式</span>
         </label>
         <div id="merchantPicker" class="merchant-picker hidden">
@@ -63,10 +63,6 @@
     <section id="results" class="results hidden">
       <div class="report">
         <div class="report-header">
-          <div>
-            <h2>年度报告（Markdown）</h2>
-            <p id="timeRange" class="report-meta"></p>
-          </div>
           <button id="copyBtn" class="ghost" type="button">复制 Markdown</button>
         </div>
         <div id="report" class="report-body"></div>
@@ -88,9 +84,6 @@
       </div>
     </section>
 
-    <footer class="footer">
-      <span>可拓展设计：前端可接入更多可视化主题或替换 JS 图表库。</span>
-    </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>

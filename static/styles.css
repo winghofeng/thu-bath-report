@@ -218,6 +218,11 @@ body {
 
 .status[data-type="success"] {
   color: var(--accent-2);
+  background: #e7f4ef;
+  border: 1px solid rgba(47, 124, 108, 0.2);
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 .results {

@@ -4,8 +4,8 @@ const statusEl = document.getElementById("status");
 const resultsEl = document.getElementById("results");
 const reportEl = document.getElementById("report");
 const copyBtn = document.getElementById("copyBtn");
-const timeRangeEl = document.getElementById("timeRange");
 const submitButton = form.querySelector("button[type='submit']");
+const fileTitle = document.getElementById("fileTitle");
 const heatmapEl = document.getElementById("heatmapChart");
 const periodEl = document.getElementById("periodChart");
 const amountEl = document.getElementById("amountChart");
@@ -14,6 +14,7 @@ const merchantList = document.getElementById("merchantList");
 
 let latestReport = "";
 let currentRunId = null;
+const defaultFileTitle = fileTitle ? fileTitle.textContent : "";
 
 function escapeHtml(text) {
   return text
@@ -256,6 +257,13 @@ function resetMerchantSelection() {
   merchantPicker.classList.add("hidden");
 }
 
+function updateFileTitle(name) {
+  if (!fileTitle) {
+    return;
+  }
+  fileTitle.textContent = name ? `上传成功：${name}` : defaultFileTitle;
+}
+
 function renderMerchantSelection(merchants, defaults) {
   merchantList.innerHTML = "";
   const defaultSet = new Set(defaults || []);
@@ -347,9 +355,6 @@ form.addEventListener("submit", async (event) => {
     resultsEl.classList.remove("hidden");
     renderCharts(data.charts || null);
 
-    if (data.time_range) {
-      timeRangeEl.textContent = `热力图覆盖时间：${data.time_range.start_hour}:00 - ${data.time_range.end_hour}:00`;
-    }
     setStatus("报告生成完成。", "success");
   } catch (error) {
     setStatus(error.message, "error");
@@ -394,6 +399,7 @@ dropZone.addEventListener("drop", (event) => {
     fileInput.files = event.dataTransfer.files;
     resetMerchantSelection();
     resultsEl.classList.add("hidden");
+    updateFileTitle(event.dataTransfer.files[0].name);
     setStatus(`已选择文件：${event.dataTransfer.files[0].name}`, "success");
   }
 });
@@ -402,6 +408,7 @@ fileInput.addEventListener("change", () => {
   if (fileInput.files.length) {
     resetMerchantSelection();
     resultsEl.classList.add("hidden");
+    updateFileTitle(fileInput.files[0].name);
     setStatus(`已选择文件：${fileInput.files[0].name}`, "success");
   }
 });
