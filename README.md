@@ -20,9 +20,11 @@
 
 ## 本地运行
 
+如果希望保护隐私数据（不上传到服务器），可以在本地运行该程序：
+
 ```bash
-python3 -m pip install -r requirements.txt
-python3 app.py
+pip install -r requirements.txt
+python app.py
 ```
 
 访问 `http://127.0.0.1:5000` 上传 Excel。
